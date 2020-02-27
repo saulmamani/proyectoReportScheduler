@@ -10,6 +10,7 @@ public class Folder extends BaseFile {
     }
 
     public void add(BaseFile file){
+        file.location = this.location;
         this.files.add(file);
     }
 
@@ -23,11 +24,10 @@ public class Folder extends BaseFile {
     }
 
     protected void show() {
-
         System.out.println("/" + this.name);
         for(BaseFile file : files){
             file.show();
         }
-        System.out.printf("Total: %.2f\n", this.getSize());
+       // System.out.printf("Total: %.2f\n", this.getSize());
     }
 }

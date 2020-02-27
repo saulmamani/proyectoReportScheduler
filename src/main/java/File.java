@@ -1,13 +1,14 @@
+import com.sun.xml.internal.ws.util.StringUtils;
+
 import java.util.Date;
 
 public class File extends BaseFile {
     private String extension;
     private double size;
 
-    public File(String name, String extension, double size, String location) {
+    public File(String name, String extension, double size) {
         this.name = name;
         this.extension = extension;
-        this.location = location;
         this.size = size;
     }
 
@@ -20,6 +21,16 @@ public class File extends BaseFile {
     }
 
     protected void show() {
-        System.out.printf("\t|_%-30s.%s \t MB %-10.2f %s\n", this.name, this.extension, this.size, this.location);
+        int cantTabs = this.location.split("/").length - 1;
+        String tabs = formarTabs(cantTabs);
+        System.out.printf("%s|_%-30s.%s \t MB %-10.2f %s\n", tabs, this.name, this.extension, this.size, this.location);
+    }
+
+    private String formarTabs(int cantTabs) {
+        StringBuilder tabs = new StringBuilder("\t");
+        for (int i = 0; i < cantTabs; i++) {
+            tabs.append("\t");
+        }
+        return tabs.toString();
     }
 }
