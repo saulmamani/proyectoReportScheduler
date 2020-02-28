@@ -1,6 +1,14 @@
 public class MainReporScheduler {
     public static void main(String[] args){
-        //Documento raiz llamado saul
+        BaseFile base = makeFolders();
+        base.show();
+
+        System.out.println(args[0]);
+    }
+
+    private static BaseFile makeFolders()
+    {
+        //Documento raiz llamado base
         BaseFile base = new Folder("base", "/");
         base.add(new File("bethoven", "mp4", 50));
         base.add(new File("informe", "odt", 29));
@@ -31,6 +39,6 @@ public class MainReporScheduler {
         documents.add(programs);
         base.add(documents);
 
-        base.show();
+        return base;
     }
 }
