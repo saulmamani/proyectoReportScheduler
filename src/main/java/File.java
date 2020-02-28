@@ -30,9 +30,9 @@ public class File extends BaseFile {
 
     protected void show() {
         int cantTabs = this.location.split("/").length;
-        String tabs = formarTabs(cantTabs-2);
+
         System.out.printf("%s|_%-25s.%s \t MB %-10.2f %s \t %s %s %s\n",
-                tabs, this.name, this.extension, this.size, this.location,
+                formarTabs(cantTabs-2), this.name, this.extension, this.size, this.location,
                 new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.created),
                 new SimpleDateFormat("HH:mm:ss").format(this.opened),
                 new SimpleDateFormat("HH:mm:ss").format(this.modified));

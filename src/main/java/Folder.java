@@ -25,9 +25,8 @@ public class Folder extends BaseFile {
 
     protected void show() {
         int cantTabs = files.get(0).location.split("/").length;
-        String tabs = formarTabs(cantTabs-3);
 
-        System.out.printf("%s|_%s/\n", tabs, this.name);
+        System.out.printf("%s|_%s/\n", formarTabs(cantTabs-3), this.name);
         for(BaseFile file : files){
             file.show();
         }
