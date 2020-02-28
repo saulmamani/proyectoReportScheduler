@@ -1,11 +1,23 @@
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class File extends BaseFile {
     private String extension;
     private double size;
+    private Date created;
+    private Date opened;
+    private Date modified;
 
     public File(String name, String extension, double size) {
         this.name = name;
         this.extension = extension;
         this.size = size;
+        this.created = RandomDate.nextDate();
+        this.opened = RandomDate.nextDate();
+        this.modified = RandomDate.nextDate();
     }
 
     protected void add(BaseFile file) {
@@ -17,16 +29,12 @@ public class File extends BaseFile {
     }
 
     protected void show() {
-        int cantTabs = this.location.split("/").length - 1;
-        String tabs = formarTabs(cantTabs);
-        System.out.printf("%s|_%-30s.%s \t MB %-10.2f %s\n", tabs, this.name, this.extension, this.size, this.location);
-    }
-
-    private String formarTabs(int cantTabs) {
-        StringBuilder tabs = new StringBuilder("\t");
-        for (int i = 0; i < cantTabs; i++) {
-            tabs.append("\t");
-        }
-        return tabs.toString();
+        int cantTabs = this.location.split("/").length;
+        String tabs = formarTabs(cantTabs-2);
+        System.out.printf("%s|_%-25s.%s \t MB %-10.2f %s \t %s %s %s\n",
+                tabs, this.name, this.extension, this.size, this.location,
+                new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.created),
+                new SimpleDateFormat("HH:mm:ss").format(this.opened),
+                new SimpleDateFormat("HH:mm:ss").format(this.modified));
     }
 }

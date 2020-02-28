@@ -3,13 +3,13 @@ public class MainReporScheduler {
         BaseFile base = makeFolders();
         base.show();
 
-        System.out.println(args[0]);
+
     }
 
     private static BaseFile makeFolders()
     {
         //Documento raiz llamado base
-        BaseFile base = new Folder("base", "/");
+        BaseFile base = new Folder("", "/");
         base.add(new File("bethoven", "mp4", 50));
         base.add(new File("informe", "odt", 29));
         base.add(new File("foto", "png", 5));
@@ -21,7 +21,7 @@ public class MainReporScheduler {
 
         //carpeta /base/music/romantica
         BaseFile cumbias = new Folder("cumbias", "/base/music/cumbias");
-        cumbias.add(new File("Lizton de tu pelo - Angeles azules", "mp3", 7));
+        cumbias.add(new File("17 años - Azules", "mp3", 7));
 
         music.add(cumbias);
         base.add(music);

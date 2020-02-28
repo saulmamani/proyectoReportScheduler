@@ -24,10 +24,12 @@ public class Folder extends BaseFile {
     }
 
     protected void show() {
-        System.out.println("/" + this.name);
+        int cantTabs = files.get(0).location.split("/").length;
+        String tabs = formarTabs(cantTabs-3);
+
+        System.out.printf("%s|_%s/\n", tabs, this.name);
         for(BaseFile file : files){
             file.show();
         }
-       // System.out.printf("Total: %.2f\n", this.getSize());
     }
 }
