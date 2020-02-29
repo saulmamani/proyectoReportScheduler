@@ -1,3 +1,5 @@
+package TreeFileDirectory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,21 +16,19 @@ public class Folder extends BaseFile {
         this.files.add(file);
     }
 
-    public double getSize() {
-        double total = 0;
-        for(BaseFile file : files)
-        {
-            total += file.getSize();
-        }
-        return total;
-    }
-
-    protected void show() {
+    public void show() {
         int cantTabs = files.get(0).location.split("/").length;
 
         System.out.printf("%s|_%s/\n", formarTabs(cantTabs-3), this.name);
         for(BaseFile file : files){
             file.show();
+        }
+    }
+
+    @Override
+    public void buscar(String regla) {
+        for(BaseFile file : files){
+            file.buscar(regla);
         }
     }
 }

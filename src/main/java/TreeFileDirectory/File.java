@@ -1,7 +1,6 @@
-import java.sql.Timestamp;
+package TreeFileDirectory;
+
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class File extends BaseFile {
@@ -20,15 +19,11 @@ public class File extends BaseFile {
         this.modified = RandomDate.nextDate();
     }
 
-    protected void add(BaseFile file) {
+    public void add(BaseFile file) {
         return;
     }
 
-    protected double getSize() {
-        return size;
-    }
-
-    protected void show() {
+    public void show() {
         int cantTabs = this.location.split("/").length;
 
         System.out.printf("%s|_%-25s.%s \t MB %-10.2f %s \t %s %s %s\n",
@@ -36,5 +31,26 @@ public class File extends BaseFile {
                 new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.created),
                 new SimpleDateFormat("HH:mm:ss").format(this.opened),
                 new SimpleDateFormat("HH:mm:ss").format(this.modified));
+    }
+
+    @Override
+    public void buscar(String regla) {
+        String attribute = regla.split(" ")[0];
+        String operator = regla.split(" ")[1];
+        String value = regla.split(" ")[2];
+
+        if(operator.equals("=")) {
+            switch (attribute)
+            {
+                case "extension": if (this.extension.equals(value)) {
+                    System.out.println(this.name + "." + this.extension);
+                } break;
+                case "name" : if(this.name.equals(value)) {
+                    System.out.println(this.name + "." + this.extension);
+                } break;
+            }
+
+        }
+
     }
 }

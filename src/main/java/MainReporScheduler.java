@@ -1,9 +1,19 @@
+import TreeFileDirectory.BaseFile;
+import TreeFileDirectory.File;
+import TreeFileDirectory.Folder;
+
 public class MainReporScheduler {
     public static void main(String[] args){
         BaseFile base = makeFolders();
         base.show();
 
+        String regla = "extension = mp3";
+        System.out.println("----busquedas regla: " + regla);
+        base.buscar(regla);
 
+        regla = "name = facade_pattern";
+        System.out.println("----busquedas regla: " + regla);
+        base.buscar(regla);
     }
 
     private static BaseFile makeFolders()
