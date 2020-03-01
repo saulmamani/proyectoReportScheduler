@@ -1,11 +1,12 @@
 package TreeFileDirectory;
 
 import People.SendEmail;
+import Searches.Rule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class File extends BaseFile {
@@ -36,15 +37,12 @@ public class File extends BaseFile {
     }
 
     @Override
-    public void buscar(String regla) throws ParseException {
-        String attribute = regla.split(" ")[0];
-        String operator = regla.split(" ")[1];
-        String value = regla.split(" ")[2];
-
+    public void buscar(Rule rule) {
         SendEmail email = new SendEmail(this);
+        String value = rule.getValue();
 
-        if (operator.equals("=")) {
-            switch (attribute) {
+        if (rule.getOperator().equals("=")) {
+            switch (rule.getAttribute()) {
                 case "extension":
                     if (this.extension.equals(value)) {
                         email.send();
@@ -56,57 +54,57 @@ public class File extends BaseFile {
                     }
                     break;
                 case "created":
-                    if (this.created.equals(value)) {
+                    if (this.created.equals(this.getDate(value))) {
                         email.send();
                     }
                     break;
                 case "opened":
-                    if (this.opened.equals(value)) {
+                    if (this.opened.equals(this.getDate(value))) {
                         email.send();
                     }
                     break;
                 case "modified":
-                    if (this.modified.equals(value)) {
+                    if (this.modified.equals(this.getDate(value))) {
                         email.send();
                     }
                     break;
             }
-        } else if (operator.equals("contains")) {
+        } else if (rule.getOperator().equals("contains")) {
             if (this.name.toLowerCase().contains(value.toLowerCase())) {
                 email.send();
             }
-        } else if (operator.equals("<")) {
-            switch (attribute) {
+        } else if (rule.getOperator().equals("<")) {
+            switch (rule.getAttribute()) {
                 case "created":
-                    if (this.created.compareTo(this.getDateS(value)) < 0) {
+                    if (this.created.compareTo(this.getDate(value)) < 0) {
                         email.send();
                     }
                     break;
                 case "opened":
-                    if (this.opened.compareTo(this.getDateS(value)) < 0) {
+                    if (this.opened.compareTo(this.getDate(value)) < 0) {
                         email.send();
                     }
                     break;
                 case "modified":
-                    if (this.modified.compareTo(this.getDateS(value)) < 0) {
+                    if (this.modified.compareTo(this.getDate(value)) < 0) {
                         email.send();
                     }
                     break;
             }
-        }else if (operator.equals(">")) {
-            switch (attribute) {
+        }else if (rule.getOperator().equals(">")) {
+            switch (rule.getAttribute()) {
                 case "created":
-                    if (this.created.compareTo(this.getDateS(value)) > 0) {
+                    if (this.created.compareTo(this.getDate(value)) > 0) {
                         email.send();
                     }
                     break;
                 case "opened":
-                    if (this.opened.compareTo(this.getDateS(value)) > 0) {
+                    if (this.opened.compareTo(this.getDate(value)) > 0) {
                         email.send();
                     }
                     break;
                 case "modified":
-                    if (this.modified.compareTo(this.getDateS(value)) > 0) {
+                    if (this.modified.compareTo(this.getDate(value)) > 0) {
                         email.send();
                     }
                     break;
@@ -114,9 +112,17 @@ public class File extends BaseFile {
         }
     }
 
-    private Date getDateS(String value) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return formatter.parse(value);
+    private Date getDate(String value) {
+        try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            formatoFecha.setLenient(false);
+            return formatoFecha.parse(value);
+        }
+        catch (ParseException ex)
+        {
+            System.out.println(ex.getMessage());
+            return null;
+        }
     }
 
     @Override

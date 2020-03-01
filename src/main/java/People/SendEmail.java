@@ -9,7 +9,7 @@ public class SendEmail {
         this.file = file;
     }
 
-    public void send(){
+    public void send() {
         System.out.println(file.getName() + "." + file.getExtension());
     }
 }

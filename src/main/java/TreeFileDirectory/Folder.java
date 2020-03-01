@@ -1,5 +1,7 @@
 package TreeFileDirectory;
 
+import Searches.Rule;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,9 @@ public class Folder extends BaseFile {
     }
 
     @Override
-    public void buscar(String regla)  throws ParseException {
+    public void buscar(Rule rule) {
         for(BaseFile file : files){
-            file.buscar(regla);
+            file.buscar(rule);
         }
     }
 }

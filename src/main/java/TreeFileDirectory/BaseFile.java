@@ -1,6 +1,6 @@
 package TreeFileDirectory;
 
-import java.text.ParseException;
+import Searches.Rule;
 
 public abstract class BaseFile {
     protected String name;
@@ -8,7 +8,7 @@ public abstract class BaseFile {
 
     public abstract void add(BaseFile file);
     public abstract void show();
-    public abstract void buscar(String regla) throws ParseException;
+    public abstract void buscar(Rule rule);
 
     protected String formarTabs(int cantTabs) {
         StringBuilder tabs = new StringBuilder("");

@@ -1,3 +1,4 @@
+import Searches.Rule;
 import TreeFileDirectory.BaseFile;
 import TreeFileDirectory.File;
 import TreeFileDirectory.Folder;
@@ -9,21 +10,21 @@ public class MainReporScheduler {
         BaseFile base = makeFolders();
         base.show();
 
-        String regla = "extension = mp3";
-        System.out.println("----busquedas regla: " + regla);
-        base.buscar(regla);
+        Rule rule = new Rule("extension", "=" , "mp3");
+        System.out.println("----busquedas regla: " + rule);
+        base.buscar(rule);
 
-        regla = "name = facade_pattern";
-        System.out.println("----busquedas regla: " + regla);
-        base.buscar(regla);
+        rule = new Rule("name", "=", "facade_pattern");
+        System.out.println("----busquedas regla: " + rule);
+        base.buscar(rule);
 
-        regla = "name contains pat";
-        System.out.println("----busquedas regla: " + regla);
-        base.buscar(regla);
+        rule = new Rule("name", "contains", "pat");
+        System.out.println("----busquedas regla: " + rule);
+        base.buscar(rule);
 
-        regla = "created < 29/02/2020 12:00";
-        System.out.println("----busquedas regla: " + regla);
-        base.buscar(regla);
+        rule = new Rule("opened", "<" ,"2020-03-01 07:23:12");
+        System.out.println("----busquedas regla: " + rule);
+        base.buscar(rule);
     }
 
     private static BaseFile makeFolders()
