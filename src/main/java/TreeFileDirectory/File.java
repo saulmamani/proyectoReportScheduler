@@ -1,12 +1,8 @@
 package TreeFileDirectory;
 
-import People.SendEmail;
-import Searches.Rule;
+import Searches.*;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class File extends BaseFile {
@@ -25,9 +21,6 @@ public class File extends BaseFile {
         this.modified = RandomDate.nextDate();
     }
 
-    public File() {
-    }
-
     public void add(BaseFile file) {
         return;
     }
@@ -38,91 +31,18 @@ public class File extends BaseFile {
 
     @Override
     public void buscar(Rule rule) {
-        SendEmail email = new SendEmail(this);
-        String value = rule.getValue();
-
+        Search search;
         if (rule.getOperator().equals("=")) {
-            switch (rule.getAttribute()) {
-                case "extension":
-                    if (this.extension.equals(value)) {
-                        email.send();
-                    }
-                    break;
-                case "name":
-                    if (this.name.equals(value)) {
-                        email.send();
-                    }
-                    break;
-                case "created":
-                    if (this.created.equals(this.getDate(value))) {
-                        email.send();
-                    }
-                    break;
-                case "opened":
-                    if (this.opened.equals(this.getDate(value))) {
-                        email.send();
-                    }
-                    break;
-                case "modified":
-                    if (this.modified.equals(this.getDate(value))) {
-                        email.send();
-                    }
-                    break;
-            }
+            search = new Equals(this, rule);
         } else if (rule.getOperator().equals("contains")) {
-            if (this.name.toLowerCase().contains(value.toLowerCase())) {
-                email.send();
-            }
+            search = new Constains(this, rule);
         } else if (rule.getOperator().equals("<")) {
-            switch (rule.getAttribute()) {
-                case "created":
-                    if (this.created.compareTo(this.getDate(value)) < 0) {
-                        email.send();
-                    }
-                    break;
-                case "opened":
-                    if (this.opened.compareTo(this.getDate(value)) < 0) {
-                        email.send();
-                    }
-                    break;
-                case "modified":
-                    if (this.modified.compareTo(this.getDate(value)) < 0) {
-                        email.send();
-                    }
-                    break;
-            }
-        }else if (rule.getOperator().equals(">")) {
-            switch (rule.getAttribute()) {
-                case "created":
-                    if (this.created.compareTo(this.getDate(value)) > 0) {
-                        email.send();
-                    }
-                    break;
-                case "opened":
-                    if (this.opened.compareTo(this.getDate(value)) > 0) {
-                        email.send();
-                    }
-                    break;
-                case "modified":
-                    if (this.modified.compareTo(this.getDate(value)) > 0) {
-                        email.send();
-                    }
-                    break;
-            }
+            search = new SmallerThan(this, rule);
+        }else {
+            search = new GreaterThan(this, rule);
         }
-    }
 
-    private Date getDate(String value) {
-        try {
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            formatoFecha.setLenient(false);
-            return formatoFecha.parse(value);
-        }
-        catch (ParseException ex)
-        {
-            System.out.println(ex.getMessage());
-            return null;
-        }
+        search.search();
     }
 
     @Override
@@ -141,5 +61,17 @@ public class File extends BaseFile {
 
     public String getExtension() {
         return extension;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getOpened() {
+        return opened;
+    }
+
+    public Date getModified() {
+        return modified;
     }
 }

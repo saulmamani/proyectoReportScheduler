@@ -10,6 +10,7 @@ public class MainReporScheduler {
         BaseFile base = makeFolders();
         base.show();
 
+        System.out.println("\n--- BUSQUEDAS ------\n");
         Rule rule = new Rule("extension", "=" , "mp3");
         System.out.println("----busquedas regla: " + rule);
         base.buscar(rule);
