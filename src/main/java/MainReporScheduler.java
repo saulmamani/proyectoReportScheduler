@@ -2,8 +2,10 @@ import TreeFileDirectory.BaseFile;
 import TreeFileDirectory.File;
 import TreeFileDirectory.Folder;
 
+import java.text.ParseException;
+
 public class MainReporScheduler {
-    public static void main(String[] args){
+    public static void main(String[] args) throws ParseException {
         BaseFile base = makeFolders();
         base.show();
 
@@ -12,6 +14,14 @@ public class MainReporScheduler {
         base.buscar(regla);
 
         regla = "name = facade_pattern";
+        System.out.println("----busquedas regla: " + regla);
+        base.buscar(regla);
+
+        regla = "name contains pat";
+        System.out.println("----busquedas regla: " + regla);
+        base.buscar(regla);
+
+        regla = "created < 29/02/2020 12:00";
         System.out.println("----busquedas regla: " + regla);
         base.buscar(regla);
     }
